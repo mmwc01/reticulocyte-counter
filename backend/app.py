@@ -30,13 +30,11 @@ def analyze_image():
     filepath = os.path.join(app.config['UPLOAD_FOLDER'], filename)
     file.save(filepath)
     
-    # Load and preprocess the image
     image = cv2.imread(filepath, cv2.IMREAD_GRAYSCALE)
-    image = cv2.resize(image, (64, 64))  # Example resize
-    image = image / 255.0  # Example normalization
+    image = cv2.resize(image, (64, 64)) 
+    image = image / 255.0 
     image = np.expand_dims(image, axis=[0, -1])
 
-    # Predict reticulocytes
     prediction = model.predict(image)
     
     return jsonify({"message": "Image processed", "prediction": prediction.tolist()})
